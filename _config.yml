@@ -3,7 +3,7 @@
 
 title: Spatial Database Development in Practice
 author: Prof. Jonathan P. Ocón
-logo: content/img/logo.png
+logo: img/logo.png
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html

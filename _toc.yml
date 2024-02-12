@@ -1,0 +1,10 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: about
+chapters:
+- file: syllabus
+  title: Course Syllabus
+- file: units/U2-Introduction_to_Normalization-p1.ipynb
+  title: Introduction to Database Normalization - 1NF & 2NF

@@ -1,0 +1,1095 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignment 2: Database Normalization using PostgreSQL with PostGIS Extension &#8212; Spatial Database Development in Practice</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/A2-Database_Normalization';</script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Introduction to Database Normalization - 1NF and 2NF" href="../units/U2-Introduction_to_Normalization-p1.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../about.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../about.html">
+                    Welcome to Spatial Database Development in Practice
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../units/U0-Software_Overview.html">Software Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../units/U1-Database_Introduction.html">What is a database?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="A1-Urban_Green_Space.html">Assignment 1 - Practice with software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../units/U2-Introduction_to_Normalization-p1.html">Introduction to Database Normalization - 1NF &amp; 2NF</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Assignment 2 - Practice with normalization</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/labs/A2-Database_Normalization.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Assignment 2: Database Normalization using PostgreSQL with PostGIS Extension</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tools-required">Tools Required:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background-on-normal-forms"><strong>Background on Normal Forms</strong>:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-vs-foreign-keys"><strong>Primary vs. Foreign Keys</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-key">Primary Key</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#characteristics-of-a-primary-key">Characteristics of a Primary Key:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreign-key">Foreign Key</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#purpose-of-a-foreign-key">Purpose of a Foreign Key:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#characteristics-of-a-foreign-key">Characteristics of a Foreign Key:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Example:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-vs-foreign-key-key-differences">Primary vs. Foreign Key - Key Differences:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assignment-overview">Assignment Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#in-part-1-understanding-and-designing-for-1nf"><strong>In Part 1: Understanding and Designing for 1NF</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#in-part-2-advancing-to-2nf"><strong>In Part 2: Advancing to 2NF</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-creating-a-non-normalized-table-and-normalizing-to-1nf"><strong>Part 1: Creating a Non-Normalized Table and Normalizing to 1NF</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-advancing-to-2nf"><strong>Part 2: Advancing to 2NF</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assignment-submission-instructions"><strong>Assignment Submission Instructions</strong>:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-prepare-your-submission">Step 1: Prepare Your Submission</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-initialize-a-git-repository">Step 2: Initialize a Git Repository</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-add-and-commit-your-files">Step 3: Add and Commit Your Files</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-push-to-github">Step 4: Push to GitHub</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-submit-your-assignment">Step 5: Submit Your Assignment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-for-a-successful-submission">Tips for a Successful Submission:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-for-success">Tips for Success:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-your-report-in-markdown"><strong>Writing Your Report in Markdown</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-markdown-syntax">Basic Markdown Syntax:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#inserting-screenshots-in-your-markdown-report">Inserting Screenshots in Your Markdown Report:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-for-writing-your-report">Tips for Writing Your Report:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assignment-rubric"><strong>Assignment Rubric</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#total-points-available-90"><strong>Total points available: 90</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sql-scripts-20-points">SQL Scripts (20 Points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#written-report-30-points">Written Report (30 Points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-of-git-and-github-20-points">Use of Git and GitHub (20 Points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#screenshots-and-formatting-20-points">Screenshots and Formatting (20 Points)</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="tex2jax_ignore mathjax_ignore section" id="assignment-2-database-normalization-using-postgresql-with-postgis-extension">
+<h1><strong>Assignment 2: Database Normalization using PostgreSQL with PostGIS Extension</strong><a class="headerlink" href="#assignment-2-database-normalization-using-postgresql-with-postgis-extension" title="Permalink to this heading">#</a></h1>
+<div class="section" id="objective">
+<h2>Objective:<a class="headerlink" href="#objective" title="Permalink to this heading">#</a></h2>
+<p>This assignment will guide you through the process of designing and normalizing a relational database to the first and second normal forms (1NF and 2NF) using PostgreSQL with the PostGIS extension. You’ll learn the concepts of normalization, how to reduce data redundancy, and improve data integrity. The focus will be on creating spatial tables that adhere to these normalization rules.</p>
+<p>This assignment will solidify your understanding of database normalization principles, specifically focusing on the first two normal forms, and introduce you to working with spatial data in PostgreSQL using the PostGIS extension.</p>
+<div class="section" id="tools-required">
+<h3>Tools Required:<a class="headerlink" href="#tools-required" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>PostgreSQL with PostGIS extension</p></li>
+<li><p>pgAdmin or any PostgreSQL client</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="background-on-normal-forms">
+<h2><strong>Background on Normal Forms</strong>:<a class="headerlink" href="#background-on-normal-forms" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>First Normal Form (1NF)</strong>: Requires that all table values are atomic (indivisible) and each column contains unique values. Essentially, no repeating groups or arrays are allowed within any single row, and each column must contain values of a single type.</p></li>
+<li><p><strong>Second Normal Form (2NF)</strong>: Achieved when it is in the first normal form and all non-key attributes are fully functional and dependent on the primary key. It eliminates partial dependency.</p></li>
+<li><p><strong>Third Normal Form (3NF)</strong>: A table is in 3NF if it is in 2NF and all its columns are not transitively dependent on the primary key.</p></li>
+<li><p><strong>Fourth Normal Form (4NF)</strong>: A table is in 4NF if it is in 3NF and does not have any multi-valued dependencies.</p></li>
+</ul>
+</div>
+<div class="section" id="primary-vs-foreign-keys">
+<h2><strong>Primary vs. Foreign Keys</strong><a class="headerlink" href="#primary-vs-foreign-keys" title="Permalink to this heading">#</a></h2>
+<p>Understanding primary and foreign keys is crucial for database integrity and functionality, enabling the efficient organization, retrieval, and management of relational data.</p>
+<div class="section" id="primary-key">
+<h3>Primary Key<a class="headerlink" href="#primary-key" title="Permalink to this heading">#</a></h3>
+<p>A <strong>primary key</strong> is a column (or a set of columns) in a database table that uniquely identifies each row in that table. The primary key has two main purposes:</p>
+<ol class="arabic simple">
+<li><p><strong>Uniqueness:</strong> It ensures that no two rows have the same primary key value, guaranteeing the uniqueness of each record. This is crucial for accurately identifying and referencing specific data entries.</p></li>
+<li><p><strong>Indexing:</strong> The primary key automatically creates an index in the table, which speeds up data retrieval operations. An index allows the database system to find and access data efficiently without scanning the entire table.</p></li>
+</ol>
+<div class="section" id="characteristics-of-a-primary-key">
+<h4>Characteristics of a Primary Key:<a class="headerlink" href="#characteristics-of-a-primary-key" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Uniqueness:</strong> Each value must be unique across all records in the table.</p></li>
+<li><p><strong>Not Null:</strong> A primary key cannot have a NULL value, as it must identify a record.</p></li>
+<li><p><strong>Stability:</strong> The value of a primary key should not change. While technically possible, updating primary keys is generally discouraged because they are used to reference rows in other tables.</p></li>
+<li><p><strong>Simplicity:</strong> Ideally, a primary key should be compact and consist of as few columns as necessary.</p></li>
+</ul>
+</div>
+<div class="section" id="example">
+<h4>Example:<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h4>
+<p>Consider a table <code class="docutils literal notranslate"><span class="pre">Users</span></code> with columns <code class="docutils literal notranslate"><span class="pre">UserID</span></code>, <code class="docutils literal notranslate"><span class="pre">Username</span></code>, and <code class="docutils literal notranslate"><span class="pre">Email</span></code>. The <code class="docutils literal notranslate"><span class="pre">UserID</span></code> could serve as the primary key because each user has a unique ID.</p>
+</div>
+</div>
+<div class="section" id="foreign-key">
+<h3>Foreign Key<a class="headerlink" href="#foreign-key" title="Permalink to this heading">#</a></h3>
+<p>A <strong>foreign key</strong> is a column (or a set of columns) in one table that uniquely identifies a row in another table or the same table (in case of self-referencing). The foreign key establishes a <strong>relationship</strong> between two tables, often to enforce referential integrity.</p>
+<div class="section" id="purpose-of-a-foreign-key">
+<h4>Purpose of a Foreign Key:<a class="headerlink" href="#purpose-of-a-foreign-key" title="Permalink to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p><strong>Referential Integrity:</strong> It ensures that the relationship between two tables remains consistent. For example, if table A references table B, a foreign key in table A prevents you from adding a record that does not have a corresponding value in table B.</p></li>
+<li><p><strong>Relationship Establishment:</strong> Foreign keys define how tables relate to each other, allowing for complex queries that span multiple tables.</p></li>
+</ol>
+</div>
+<div class="section" id="characteristics-of-a-foreign-key">
+<h4>Characteristics of a Foreign Key:<a class="headerlink" href="#characteristics-of-a-foreign-key" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Reference:</strong> It references the primary key or a unique key in another table.</p></li>
+<li><p><strong>Nullable:</strong> A foreign key can be NULL, indicating that a relationship may not exist for some rows.</p></li>
+<li><p><strong>Multiplicity:</strong> A single foreign key value can reference multiple rows in the related table, supporting one-to-many relationships.</p></li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h4>Example:<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
+<p>Continuing with the <code class="docutils literal notranslate"><span class="pre">Users</span></code> table example, suppose there’s another table <code class="docutils literal notranslate"><span class="pre">Orders</span></code> with columns <code class="docutils literal notranslate"><span class="pre">OrderID</span></code>, <code class="docutils literal notranslate"><span class="pre">OrderDate</span></code>, and <code class="docutils literal notranslate"><span class="pre">UserID</span></code>. The <code class="docutils literal notranslate"><span class="pre">UserID</span></code> in <code class="docutils literal notranslate"><span class="pre">Orders</span></code> is a foreign key that references <code class="docutils literal notranslate"><span class="pre">UserID</span></code> in the <code class="docutils literal notranslate"><span class="pre">Users</span></code> table. This setup ensures that every order is linked to a user who placed it.</p>
+</div>
+</div>
+<div class="section" id="primary-vs-foreign-key-key-differences">
+<h3>Primary vs. Foreign Key - Key Differences:<a class="headerlink" href="#primary-vs-foreign-key-key-differences" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Purpose:</strong> Primary keys uniquely identify records within a table. Foreign keys link records between tables.</p></li>
+<li><p><strong>Uniqueness:</strong> Primary key values must be unique within its table. Foreign key values do not need to be unique and often repeat in the referencing table.</p></li>
+<li><p><strong>Nullability:</strong> Primary keys cannot be NULL. Foreign keys can be NULL, depending on the relationship and design requirements.</p></li>
+<li><p><strong>Referential Role:</strong> Only foreign keys have a referential role, establishing a direct relationship between tables.</p></li>
+</ul>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="assignment-overview">
+<h2>Assignment Overview<a class="headerlink" href="#assignment-overview" title="Permalink to this heading">#</a></h2>
+<div class="section" id="in-part-1-understanding-and-designing-for-1nf">
+<h3><strong>In Part 1: Understanding and Designing for 1NF</strong><a class="headerlink" href="#in-part-1-understanding-and-designing-for-1nf" title="Permalink to this heading">#</a></h3>
+<p><strong>Task 1.1: Create a Non-Normalized Table</strong></p>
+<ul class="simple">
+<li><p>You will design a simple table that violates the 1NF to understand what not to do.</p></li>
+<li><p>Example table: <code class="docutils literal notranslate"><span class="pre">Parks_Info</span></code></p></li>
+</ul>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Park Name</p></th>
+<th class="head"><p>Facilities</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>Central Park</p></td>
+<td><p>Playground, Restroom, Picnic area</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Liberty Park</p></td>
+<td><p>Restroom, Picnic area</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Riverside Park</p></td>
+<td><p>Playground, Bike Path</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Task 1.2: Normalize the Table to 1NF</strong></p>
+<ul class="simple">
+<li><p>Modify the <code class="docutils literal notranslate"><span class="pre">Parks_Info</span></code> table to ensure it complies with 1NF.</p></li>
+<li><p>Split the <code class="docutils literal notranslate"><span class="pre">Facilities</span></code> column to remove the list of values, ensuring each row/column intersection has a single value.</p></li>
+</ul>
+</div>
+<div class="section" id="in-part-2-advancing-to-2nf">
+<h3><strong>In Part 2: Advancing to 2NF</strong><a class="headerlink" href="#in-part-2-advancing-to-2nf" title="Permalink to this heading">#</a></h3>
+<p><strong>Task 2.1: Identify Partial Dependencies</strong></p>
+<ul class="simple">
+<li><p>Analyze the 1NF table to identify any partial dependencies, where some columns depend only on a part of the primary key in case of composite primary keys.</p></li>
+</ul>
+<p><strong>Task 2.2: Create Related Tables to Achieve 2NF</strong></p>
+<ul class="simple">
+<li><p>Eliminate partial dependencies by creating separate tables.</p></li>
+<li><p>Establish relationships using foreign keys.</p></li>
+</ul>
+<div class="section" id="setup">
+<h4>Setup:<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p><strong>PostgreSQL and PostGIS</strong>:</p>
+<ul class="simple">
+<li><p>Create a new database named <code class="docutils literal notranslate"><span class="pre">dataNorm</span></code>.</p></li>
+<li><p>Install the PostGIS extension by executing <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">EXTENSION</span> <span class="pre">postgis;</span></code> in your <code class="docutils literal notranslate"><span class="pre">dataNorm</span></code>.</p></li>
+</ul>
+</li>
+<li><p><strong>Access Your Database</strong>:</p>
+<ul class="simple">
+<li><p>Use pgAdmin or a command-line tool to connect to <code class="docutils literal notranslate"><span class="pre">dataNorm</span></code>.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="part-1-creating-a-non-normalized-table-and-normalizing-to-1nf">
+<h2><strong>Part 1: Creating a Non-Normalized Table and Normalizing to 1NF</strong><a class="headerlink" href="#part-1-creating-a-non-normalized-table-and-normalizing-to-1nf" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Manually Create a Non-Normalized Table:</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p>Create a table named ‘Parks_Info’ with three columns: ID, ParkName, and Facilities.</p></li>
+<li><p>‘ID’ is a serial number that automatically increments with each new row and is the primary key.</p></li>
+<li><p>‘ParkName’ and ‘Facilities’ are text fields that can store up to 255 characters.</p></li>
+</ul>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Parks_Info</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">ID</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ParkName</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">    </span><span class="n">Facilities</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Insert data into the ‘Parks_Info’ table. Each row represents a park with its name and facilities.</p></li>
+<li><p>‘Central Park’ has a playground, restroom, and picnic area.</p></li>
+<li><p>‘Liberty Park’ has a restroom and picnic area.– ‘Riverside Park’ has a playground and bike path.</p></li>
+</ul>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">Parks_Info</span><span class="w"> </span><span class="p">(</span><span class="n">ParkName</span><span class="p">,</span><span class="w"> </span><span class="n">Facilities</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="p">(</span><span class="s1">&#39;Central Park&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Playground, Restroom, Picnic area&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Liberty Park&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Restroom, Picnic area&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;Riverside Park&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Playground, Bike Path&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><strong>Normalize to 1NF:</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p>Break down the <code class="docutils literal notranslate"><span class="pre">Facilities</span></code> column so each facility is in its own row.</p></li>
+<li><p>Create a new table ‘Parks’ to store information about parks with a more normalized structure.</p></li>
+<li><p>‘ParkID’ is a unique identifier for each park, and ‘ParkName’ stores the name of the park.</p></li>
+</ul>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Parks</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">ParkID</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ParkName</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- Create a &#39;Facilities&#39; table to separately store facilities available in each park.
+- &#39;FacilityID&#39; is a unique identifier for each facility.
+- &#39;ParkID&#39; links each facility to a specific park in the &#39;Parks&#39; table, establishing a relationship between the two tables.
+- &#39;FacilityName&#39; describes the facility.
+  - A foreign key constraint ensures that &#39;ParkID&#39; in &#39;Facilities&#39; references a valid &#39;ParkID&#39; in &#39;Parks&#39;.
+</pre></div>
+</div>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Facilities</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">FacilityID</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ParkID</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">FacilityName</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">ParkID</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">Parks</span><span class="p">(</span><span class="n">ParkID</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Populate <code class="docutils literal notranslate"><span class="pre">Parks</span></code> and <code class="docutils literal notranslate"><span class="pre">Facilities</span></code> with data split from <code class="docutils literal notranslate"><span class="pre">Parks_Info</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="part-2-advancing-to-2nf">
+<h2><strong>Part 2: Advancing to 2NF</strong><a class="headerlink" href="#part-2-advancing-to-2nf" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Identify and Remove Partial Dependencies:</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p>Suppose you have a composite key and identify a column that depends only on part of that key, you’ll need to adjust your table structure.</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p><strong>Manually Create Related Tables:</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p>Use foreign keys to link related data across tables.</p></li>
+<li><p>Create a table ‘ParkFacilities’ to further normalize the data by separating out facility information.</p></li>
+<li><p>This table will store a unique list of all types of facilities.</p></li>
+</ul>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">ParkFacilities</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">FacilityID</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">FacilityName</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Modify the ‘Facilities’ table to include a reference to ‘ParkFacilities’.</p></li>
+<li><p>This involves adding a new column ‘ParkFacilityID’ to link to ‘ParkFacilities’.</p></li>
+</ul>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Facilities</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">ParkFacilityID</span><span class="w"> </span><span class="nb">INT</span><span class="p">;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Update the ‘Facilities’ table to set the new ‘ParkFacilityID’ column.</p></li>
+<li><p>This matches each facility by name with its corresponding ID from ‘ParkFacilities’.</p></li>
+<li><p>It effectively links the facility in ‘Facilities’ to a unique identifier in ‘ParkFacilities’.</p></li>
+</ul>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Facilities</span>
+<span class="k">ADD</span><span class="w"> </span><span class="k">CONSTRAINT</span><span class="w"> </span><span class="n">fk_parkfacilityid</span><span class="w"> </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">ParkFacilityID</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">ParkFacilities</span><span class="p">(</span><span class="n">FacilityID</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Remove the now redundant ‘FacilityName’ column from ‘Facilities’, since the relationship is maintained via ‘FacilityID’.</p></li>
+<li><p>Finally, add a foreign key constraint to ‘Facilities’ to enforce the relationship between ‘Facilities’ and ‘ParkFacilities’.</p></li>
+<li><p>This ensures that every ‘FacilityID’ in ‘Facilities’ corresponds to a valid ‘FacilityID’ in ‘ParkFacilities’.</p></li>
+</ul>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">UPDATE</span><span class="w"> </span><span class="n">Facilities</span>
+<span class="k">SET</span><span class="w"> </span><span class="n">ParkFacilityID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">FacilityID</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">ParkFacilities</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">FacilityName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Facilities</span><span class="p">.</span><span class="n">FacilityName</span><span class="p">;</span>
+
+<span class="c1">-- Cleanup redundant columns</span>
+<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Facilities</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">FacilityName</span><span class="p">;;</span>
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="assignment-submission-instructions">
+<h2><strong>Assignment Submission Instructions</strong>:<a class="headerlink" href="#assignment-submission-instructions" title="Permalink to this heading">#</a></h2>
+<p>For this assignment, you will leverage Git Bash to version control your work and push your final submission to a GitHub repository. This approach will not only allow us to review your SQL scripts, report, and screenshots but also introduce you to best practices in code versioning and collaboration. Follow the steps below to prepare and submit your assignment.</p>
+<div class="section" id="step-1-prepare-your-submission">
+<h3>Step 1: Prepare Your Submission<a class="headerlink" href="#step-1-prepare-your-submission" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Organize Your Project Folder</strong>:</p>
+<ul class="simple">
+<li><p>Ensure your project folder is well-organized and contains only the files you intend to submit. Typically, this will include:</p>
+<ul>
+<li><p>SQL scripts for creating and normalizing tables.</p></li>
+<li><p>A Markdown or text file (<code class="docutils literal notranslate"><span class="pre">REPORT.md</span></code> or <code class="docutils literal notranslate"><span class="pre">REPORT.txt</span></code>) containing your normalization report.</p></li>
+<li><p>Screenshots showing your final table structures in pgAdmin or the command-line outputs.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Write Your Report</strong>:</p>
+<ul class="simple">
+<li><p>In <code class="docutils literal notranslate"><span class="pre">REPORT.md</span></code> or <code class="docutils literal notranslate"><span class="pre">REPORT.txt</span></code>, explain the process and rationale behind normalizing your database to 1NF and then to 2NF. Include any challenges faced and how you addressed them.</p></li>
+</ul>
+</li>
+<li><p><strong>Capture Screenshots</strong>:</p>
+<ul class="simple">
+<li><p>Take screenshots of your table structures in pgAdmin or command-line outputs that demonstrate your database’s compliance with 1NF and 2NF. Save these screenshots in your project folder.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="step-2-initialize-a-git-repository">
+<h3>Step 2: Initialize a Git Repository<a class="headerlink" href="#step-2-initialize-a-git-repository" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Open Git Bash</strong>:</p>
+<ul class="simple">
+<li><p>Navigate to your project folder in Git Bash. Use the <code class="docutils literal notranslate"><span class="pre">cd</span></code> command to change directories to your project folder.</p></li>
+</ul>
+</li>
+<li><p><strong>Initialize the Repository</strong>:</p>
+<ul class="simple">
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">init</span></code> to initialize a new Git repository in your project folder.</p></li>
+</ul>
+</li>
+<li><p><strong>Create a .gitignore File</strong> (Optional but Recommended):</p>
+<ul class="simple">
+<li><p>Create a <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> file to specify files or directories that Git should ignore, such as large data files or personal configuration files. Use the <code class="docutils literal notranslate"><span class="pre">touch</span> <span class="pre">.gitignore</span></code> command to create this file, then edit it with a text editor to add your rules.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="step-3-add-and-commit-your-files">
+<h3>Step 3: Add and Commit Your Files<a class="headerlink" href="#step-3-add-and-commit-your-files" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Add Files to the Repository</strong>:</p>
+<ul class="simple">
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">.</span></code> to stage all files in your project folder for commit. Alternatively, use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">&lt;file&gt;</span></code> to add specific files.</p></li>
+</ul>
+</li>
+<li><p><strong>Commit Your Changes</strong>:</p>
+<ul class="simple">
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-m</span> <span class="pre">&quot;Submit</span> <span class="pre">database</span> <span class="pre">normalization</span> <span class="pre">assignment&quot;</span></code> to commit your staged files to the repository with a descriptive message.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="step-4-push-to-github">
+<h3>Step 4: Push to GitHub<a class="headerlink" href="#step-4-push-to-github" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Create a GitHub Repository</strong>:</p>
+<ul class="simple">
+<li><p>Go to GitHub and create a new repository named <code class="docutils literal notranslate"><span class="pre">DatabaseNormalizationAssignment</span></code>. Do not initialize it with a README, .gitignore, or license.</p></li>
+</ul>
+</li>
+<li><p><strong>Link Your Local Repository to GitHub</strong>:</p>
+<ul class="simple">
+<li><p>Follow the instructions provided by GitHub to push an existing repository from the command line, which will include:</p>
+<ul>
+<li><p>Setting the remote repository with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">add</span> <span class="pre">origin</span> <span class="pre">&lt;repository-URL&gt;</span></code>.</p></li>
+<li><p>Pushing your commits to GitHub with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">-u</span> <span class="pre">origin</span> <span class="pre">master</span></code> or <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">-u</span> <span class="pre">origin</span> <span class="pre">main</span></code> depending on your branch name.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="step-5-submit-your-assignment">
+<h3>Step 5: Submit Your Assignment<a class="headerlink" href="#step-5-submit-your-assignment" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Provide the GitHub Repository URL</strong>:</p>
+<ul>
+<li><p>Submit the URL of your GitHub repository to your instructor and course assistant through your course’s submission system or as instructed by your course guidelines.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="tips-for-a-successful-submission">
+<h3>Tips for a Successful Submission:<a class="headerlink" href="#tips-for-a-successful-submission" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Double-check your repository to ensure it includes all required files and that your <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> is correctly configured.</p></li>
+<li><p>Review your report for clarity and completeness.</p></li>
+<li><p><strong>Make sure your GitHub repository is set to public so it can be accessed and reviewed by your instructor and course assistant</strong>.</p></li>
+</ul>
+<p>By following these detailed submission instructions, you’ll not only demonstrate your understanding of database normalization but also gain practical experience in using Git and GitHub for version control and collaboration, skills that are invaluable in the field of software development and data management.</p>
+<div class="section" id="tips-for-success">
+<h4>Tips for Success:<a class="headerlink" href="#tips-for-success" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Pay close attention to the definitions of each normal form and ensure your table structures comply with these rules.</p></li>
+<li><p>Use clear and consistent naming conventions for tables and columns.</p></li>
+<li><p>Test your SQL scripts incrementally to catch and correct errors early in the process.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="writing-your-report-in-markdown">
+<h2><strong>Writing Your Report in Markdown</strong><a class="headerlink" href="#writing-your-report-in-markdown" title="Permalink to this heading">#</a></h2>
+<p>Markdown is a lightweight markup language that allows you to add formatting elements to plaintext text documents. Here’s a quick guide on how to use Markdown to format your report, including how to insert screenshots, which is particularly useful for your database normalization assignment report hosted on GitHub.</p>
+<div class="section" id="basic-markdown-syntax">
+<h3>Basic Markdown Syntax:<a class="headerlink" href="#basic-markdown-syntax" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p><strong>Headers</strong>:
+Use <code class="docutils literal notranslate"><span class="pre">#</span></code> for a top-level header (similar to HTML <code class="docutils literal notranslate"><span class="pre">&lt;h1&gt;</span></code>), and use multiple <code class="docutils literal notranslate"><span class="pre">##</span></code> for sub-headers (<code class="docutils literal notranslate"><span class="pre">&lt;h2&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;h3&gt;</span></code>, etc.).</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="gu">## Database Normalization Assignment</span>
+<span class="gu">### Part 1: Introduction</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Emphasis</strong>:</p>
+<ul class="simple">
+<li><p><em>Italic</em>: Use single asterisks or underscores around the text <code class="docutils literal notranslate"><span class="pre">*italic*</span></code> or <code class="docutils literal notranslate"><span class="pre">_italic_</span></code>.</p></li>
+<li><p><strong>Bold</strong>: Use double asterisks or underscores <code class="docutils literal notranslate"><span class="pre">**bold**</span></code> or <code class="docutils literal notranslate"><span class="pre">__bold__</span></code>.</p></li>
+</ul>
+</li>
+<li><p><strong>Lists</strong>:</p>
+<ul>
+<li><p>Unordered lists can be created using asterisks, plus signs, or hyphens interchangeably.</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="k">-</span><span class="w"> </span>Item 1
+<span class="k">-</span><span class="w"> </span>Item 2
+</pre></div>
+</div>
+</li>
+<li><p>Ordered lists are created with numbers:</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="k">1.</span> First item
+<span class="k">2.</span> Second item
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Links</strong>:
+To create a link, wrap the link text in brackets <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">]</span></code>, and then wrap the URL in parentheses <code class="docutils literal notranslate"><span class="pre">(</span> <span class="pre">)</span></code>.</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>[<span class="nt">GitHub</span>](<span class="na">https://github.com/</span>)
+</pre></div>
+</div>
+</li>
+<li><p><strong>Code Blocks</strong>:
+For inline code, use single backticks: <code class="docutils literal notranslate"><span class="pre">`SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table;`</span></code>. For larger code snippets or SQL queries, use triple backticks with an optional language identifier:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Parks</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="section" id="inserting-screenshots-in-your-markdown-report">
+<h4>Inserting Screenshots in Your Markdown Report:<a class="headerlink" href="#inserting-screenshots-in-your-markdown-report" title="Permalink to this heading">#</a></h4>
+<p>To include screenshots in your GitHub-hosted report, you’ll first need to host the image file somewhere accessible over the internet. Since GitHub repositories can store binary files like images, you can directly upload your screenshots to your repository and reference them in your Markdown file.</p>
+<ol class="arabic">
+<li><p><strong>Uploading Images</strong>:</p>
+<ul class="simple">
+<li><p>Place your screenshots in a directory within your repository, such as <code class="docutils literal notranslate"><span class="pre">/images</span></code>.</p></li>
+<li><p>Use the GitHub interface to upload files or push them via Git commands.</p></li>
+</ul>
+</li>
+<li><p><strong>Referencing Images in Markdown</strong>:</p>
+<ul>
+<li><p>Once the images are in your repository, you can reference them using relative paths. Here’s the syntax for embedding an image:</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>![<span class="nt">Alt text for the image</span>](<span class="na">/images/screenshot.png</span>)
+</pre></div>
+</div>
+</li>
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">/images/screenshot.png</span></code> with the path to your image file and provide suitable alt text. The alt text is important for accessibility, providing a text alternative to the image content.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="tips-for-writing-your-report">
+<h4>Tips for Writing Your Report:<a class="headerlink" href="#tips-for-writing-your-report" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Clarity and Conciseness</strong>: Keep your sentences clear and to the point. Markdown doesn’t affect the textual content but makes it more readable.</p></li>
+<li><p><strong>Consistent Formatting</strong>: Use the same style for headers, lists, and code blocks throughout your report for a cohesive look.</p></li>
+<li><p><strong>Preview Your Document</strong>: Use GitHub’s preview feature to review your document for formatting errors before finalizing it.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="assignment-rubric">
+<h2><strong>Assignment Rubric</strong><a class="headerlink" href="#assignment-rubric" title="Permalink to this heading">#</a></h2>
+<div class="section" id="total-points-available-90">
+<h3><strong>Total points available: 90</strong><a class="headerlink" href="#total-points-available-90" title="Permalink to this heading">#</a></h3>
+</div>
+<div class="section" id="sql-scripts-20-points">
+<h3>SQL Scripts (20 Points)<a class="headerlink" href="#sql-scripts-20-points" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Correct Implementation of 1NF (10 Points)</strong></p>
+<ul>
+<li><p>10 Points: Table(s) perfectly normalized to 1NF with all columns atomic, no repeating groups, and primary keys correctly identified.</p></li>
+<li><p>5-9 Points: Minor issues in normalization to 1NF, such as slight redundancy or improper atomicity.</p></li>
+<li><p>0-4 Points: Major issues in normalization, with significant redundancy or lack of atomicity.</p></li>
+</ul>
+</li>
+<li><p><strong>Correct Implementation of 2NF (10 Points)</strong></p>
+<ul>
+<li><p>10 Points: Table(s) perfectly normalized to 2NF with no partial dependencies and all non-key attributes fully functional and dependent on the primary key.</p></li>
+<li><p>5-9 Points: Minor issues in achieving 2NF, with some partial dependencies not fully addressed.</p></li>
+<li><p>0-4 Points: Major issues in achieving 2NF, with numerous partial dependencies and improper key usage.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="written-report-30-points">
+<h3>Written Report (30 Points)<a class="headerlink" href="#written-report-30-points" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Explanation of Normalization Process (15 Points)</strong></p>
+<ul>
+<li><p>15 Points: Provides a clear, detailed explanation of the normalization process, including reasoning behind each normalization step to 1NF and 2NF.</p></li>
+<li><p>8-14 Points: Adequate explanation of the normalization process but may lack detail or clarity in certain areas.</p></li>
+<li><p>0-7 Points: Explanation is vague, incomplete, or significantly lacks understanding of normalization concepts.</p></li>
+</ul>
+</li>
+<li><p><strong>Challenges and Solutions (10 Points)</strong></p>
+<ul>
+<li><p>10 Points: Thoughtfully identifies challenges faced during the assignment and explains the solutions or strategies used to overcome them.</p></li>
+<li><p>5-9 Points: Identifies some challenges with basic explanations of solutions, lacking depth or reflection.</p></li>
+<li><p>0-4 Points: Minimal or no discussion of challenges faced, or solutions are not logical or relevant.</p></li>
+</ul>
+</li>
+<li><p><strong>Formatting and Clarity (5 Points)</strong></p>
+<ul>
+<li><p>5 Points: Report is well-organized, using Markdown formatting effectively for headers, lists, code blocks, and images. Writing is clear and concise.</p></li>
+<li><p>3-4 Points: Report is generally well-organized with minor issues in formatting or clarity.</p></li>
+<li><p>0-2 Points: Report lacks organization, with significant issues in formatting, readability, or coherence.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="use-of-git-and-github-20-points">
+<h3>Use of Git and GitHub (20 Points)<a class="headerlink" href="#use-of-git-and-github-20-points" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Repository Organization (10 Points)</strong></p>
+<ul>
+<li><p>10 Points: Repository is well-organized with clear, logical structure; includes a <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> file; and all relevant files are present.</p></li>
+<li><p>5-9 Points: Repository is mostly organized but may lack a <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> file or have minor organizational issues.</p></li>
+<li><p>0-4 Points: Repository is disorganized, missing key files, or includes unnecessary files tracked.</p></li>
+</ul>
+</li>
+<li><p><strong>Commit History (10 Points)</strong></p>
+<ul>
+<li><p>10 Points: Commit history is detailed with meaningful commit messages that accurately reflect each change.</p></li>
+<li><p>5-9 Points: Commit history is present but messages may be vague or some changes poorly documented.</p></li>
+<li><p>0-4 Points: Sparse commit history, nonsensical commit messages, or large commits that lack specificity.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="screenshots-and-formatting-20-points">
+<h3>Screenshots and Formatting (20 Points)<a class="headerlink" href="#screenshots-and-formatting-20-points" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Inclusion of Screenshots (10 Points)</strong></p>
+<ul>
+<li><p>10 Points: Relevant screenshots are included and clearly demonstrate the database structure and normalization results.</p></li>
+<li><p>5-9 Points: Screenshots are included but may not clearly or completely demonstrate key aspects of the assignment.</p></li>
+<li><p>0-4 Points: Few or no screenshots included, or screenshots are irrelevant/unrelated to the assignment requirements.</p></li>
+</ul>
+</li>
+<li><p><strong>Markdown Formatting (10 Points)</strong></p>
+<ul>
+<li><p>10 Points: Markdown is used effectively throughout the report to enhance readability and organization; images are embedded properly with descriptive alt text.</p></li>
+<li><p>5-9 Points: Markdown used with minor issues in effectiveness; images may lack alt text or be improperly formatted.</p></li>
+<li><p>0-4 Points: Minimal or incorrect use of Markdown; images not embedded or poorly integrated into the report.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./labs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../units/U2-Introduction_to_Normalization-p1.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><strong>Introduction to Database Normalization - 1NF and 2NF</strong></p>
+      </div>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tools-required">Tools Required:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background-on-normal-forms"><strong>Background on Normal Forms</strong>:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-vs-foreign-keys"><strong>Primary vs. Foreign Keys</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-key">Primary Key</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#characteristics-of-a-primary-key">Characteristics of a Primary Key:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foreign-key">Foreign Key</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#purpose-of-a-foreign-key">Purpose of a Foreign Key:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#characteristics-of-a-foreign-key">Characteristics of a Foreign Key:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Example:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-vs-foreign-key-key-differences">Primary vs. Foreign Key - Key Differences:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assignment-overview">Assignment Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#in-part-1-understanding-and-designing-for-1nf"><strong>In Part 1: Understanding and Designing for 1NF</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#in-part-2-advancing-to-2nf"><strong>In Part 2: Advancing to 2NF</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-creating-a-non-normalized-table-and-normalizing-to-1nf"><strong>Part 1: Creating a Non-Normalized Table and Normalizing to 1NF</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-advancing-to-2nf"><strong>Part 2: Advancing to 2NF</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assignment-submission-instructions"><strong>Assignment Submission Instructions</strong>:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-prepare-your-submission">Step 1: Prepare Your Submission</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-initialize-a-git-repository">Step 2: Initialize a Git Repository</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-add-and-commit-your-files">Step 3: Add and Commit Your Files</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-push-to-github">Step 4: Push to GitHub</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-submit-your-assignment">Step 5: Submit Your Assignment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-for-a-successful-submission">Tips for a Successful Submission:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-for-success">Tips for Success:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-your-report-in-markdown"><strong>Writing Your Report in Markdown</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-markdown-syntax">Basic Markdown Syntax:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#inserting-screenshots-in-your-markdown-report">Inserting Screenshots in Your Markdown Report:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-for-writing-your-report">Tips for Writing Your Report:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assignment-rubric"><strong>Assignment Rubric</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#total-points-available-90"><strong>Total points available: 90</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sql-scripts-20-points">SQL Scripts (20 Points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#written-report-30-points">Written Report (30 Points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-of-git-and-github-20-points">Use of Git and GitHub (20 Points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#screenshots-and-formatting-20-points">Screenshots and Formatting (20 Points)</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Prof. Jonathan Pando Ocón
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -156,7 +156,11 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/U0-Software_Overview.html">Software Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/U1-Database_Introduction.html">What is a database?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="labs/A1-Urban_Green_Space.html">Assignment 1 - Practice with software</a></li>
 <li class="toctree-l1"><a class="reference internal" href="units/U2-Introduction_to_Normalization-p1.html">Introduction to Database Normalization - 1NF &amp; 2NF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="labs/A2-Database_Normalization.html">Assignment 2 - Practice with normalization</a></li>
 </ul>
 
     </div>
@@ -280,7 +284,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -296,6 +302,21 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-overview">Course Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-learning-objectives">Key Learning Objectives</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-structure">Course Structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tools-and-technology">Tools and Technology</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-project">Final Project</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -307,6 +328,42 @@ document.write(`
                   
   <div class="tex2jax_ignore mathjax_ignore section" id="spatial-database-development-in-practice">
 <h1>Spatial Database Development in Practice<a class="headerlink" href="#spatial-database-development-in-practice" title="Permalink to this heading">#</a></h1>
+<p>This course is designed for individuals interested in GIS (Geographic Information Systems) project management and focuses on the critical aspects of organizing and managing location-based data. Throughout this course, you will gain hands-on experience and develop the skills necessary for professional GIS positions. Below is an overview of what you can expect from this course.</p>
+<div class="section" id="course-overview">
+<h2>Course Overview<a class="headerlink" href="#course-overview" title="Permalink to this heading">#</a></h2>
+<p>Spatial database development is a fundamental component of effective GIS project management. It involves the meticulous organization, collection, and standardization of location-based data. This course is tailored to equip participants with the knowledge and skills to implement best practices in database development, emphasizing the importance of data integrity and accuracy in GIS projects.</p>
+<div class="section" id="key-learning-objectives">
+<h3>Key Learning Objectives<a class="headerlink" href="#key-learning-objectives" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Database Development Best Practices:</strong> Learn the ins and outs of setting up a spatial database, focusing on efficiency, reliability, and scalability.</p></li>
+<li><p><strong>Data Collection and Standardization:</strong> Understand the processes involved in gathering spatial data from various sources and standardizing it to ensure consistency across your database.</p></li>
+<li><p><strong>Topological Rules Application:</strong> Master the application of topological rules to maintain spatial relationships within your database, essential for accurate data analysis and visualization.</p></li>
+<li><p><strong>Final Database Projects:</strong> Engage in comprehensive projects that simulate real-world GIS scenarios, enhancing your problem-solving skills and readiness for professional challenges.</p></li>
+<li><p><strong>Collaboration:</strong> Develop teamwork and collaboration skills vital for GIS projects through group assignments and project work.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="course-structure">
+<h2>Course Structure<a class="headerlink" href="#course-structure" title="Permalink to this heading">#</a></h2>
+<p>This course is structured to provide a balance between theoretical knowledge and practical application. The curriculum includes:</p>
+<ul class="simple">
+<li><p><strong>Lectures:</strong> Covering theoretical aspects of spatial database development, including principles, techniques, and challenges.</p></li>
+<li><p><strong>Practical Sessions:</strong> Hands-on exercises and labs to apply the concepts learned in lectures to real-world scenarios.</p></li>
+<li><p><strong>Project Work:</strong> Students will work individually or in groups on final database projects that encompass all aspects of the course material, aimed at solving practical GIS problems.</p></li>
+</ul>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading">#</a></h2>
+<p>Participants are expected to have a basic understanding of GIS concepts and some familiarity with database management systems. Programming knowledge, while not required, will be beneficial.</p>
+</div>
+<div class="section" id="tools-and-technology">
+<h2>Tools and Technology<a class="headerlink" href="#tools-and-technology" title="Permalink to this heading">#</a></h2>
+<p>This course will utilize various GIS software and database management systems. Specific tools will be announced at the beginning of the course, and resources will be provided for students to access the necessary software.</p>
+</div>
+<div class="section" id="final-project">
+<h2>Final Project<a class="headerlink" href="#final-project" title="Permalink to this heading">#</a></h2>
+<p>The culmination of this course is a final database project that challenges students to apply everything they have learned. This project will simulate a real-world GIS application, requiring students to demonstrate their skills in database development, data standardization, and application of topological rules. Collaboration is encouraged, reflecting the real-world scenario of working in GIS project teams.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -350,6 +407,27 @@ document.write(`
             
             
               
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-overview">Course Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-learning-objectives">Key Learning Objectives</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-structure">Course Structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tools-and-technology">Tools and Technology</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-project">Final Project</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
             
           </div>
           <footer class="bd-footer-content">
@@ -359,7 +437,7 @@ document.write(`
   <div class="footer-item">
     
 <p class="component-author">
-By Prof. Jonathan P. Ocón
+By Prof. Jonathan Pando Ocón
 </p>
 
   </div>
@@ -368,7 +446,7 @@ By Prof. Jonathan P. Ocón
     
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2024.
       <br/>
     
   </p>

@@ -61,11 +61,11 @@ const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'units/U2-Introduction_to_Normalization-p1';</script>
-    <link rel="canonical" href="https://studyingplace.space/spatial-database/units/U2-Introduction_to_Normalization-p1.html" />
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Course Syllabus" href="../syllabus.html" />
+    <link rel="next" title="Assignment 2: Database Normalization using PostgreSQL with PostGIS Extension" href="../labs/A2-Database_Normalization.html" />
+    <link rel="prev" title="Assignment 1: Urban Green Spaces Analysis" href="../labs/A1-Urban_Green_Space.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -158,7 +158,11 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="U0-Software_Overview.html">Software Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="U1-Database_Introduction.html">What is a database?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/A1-Urban_Green_Space.html">Assignment 1 - Practice with software</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to Database Normalization - 1NF &amp; 2NF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/A2-Database_Normalization.html">Assignment 2 - Practice with normalization</a></li>
 </ul>
 
     </div>
@@ -306,13 +310,15 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective"><em>Objective</em></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#database-normalization"><strong>Database Normalization</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-normal-form-1nf"><strong>First Normal Form (1NF)</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-example"><strong>“Real-world” Example:</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#database-normalization"><strong>Database Normalization</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#first-normal-form-1nf"><strong>First Normal Form (1NF)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example"><strong>Example:</strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#second-normal-form-2nf"><strong>Second Normal Form (2NF)</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>“Real-world” Example:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#second-normal-form-2nf"><strong>Second Normal Form (2NF)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Example:</strong></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendations-and-best-practices-for-spatial-data"><strong>Recommendations and Best Practices for Spatial Data</strong></a><ul class="nav section-nav flex-column">
@@ -348,16 +354,14 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <div class="section" id="introduction-to-database-normalization-1nf-and-2nf">
+  <div class="tex2jax_ignore mathjax_ignore section" id="introduction-to-database-normalization-1nf-and-2nf">
 <h1><strong>Introduction to Database Normalization - 1NF and 2NF</strong><a class="headerlink" href="#introduction-to-database-normalization-1nf-and-2nf" title="Permalink to this heading">#</a></h1>
 <div class="section" id="objective">
 <h2><em>Objective</em><a class="headerlink" href="#objective" title="Permalink to this heading">#</a></h2>
 <p>This lecture aims to introduce the concepts of the First Normal Form (1NF) and the Second Normal Form (2NF) in database normalization. By understanding these foundational concepts, students will learn to design databases that reduce redundancy and enhance data integrity.</p>
 <p>Understanding and applying the principles of 1NF and 2NF is crucial in designing efficient, reliable databases. By ensuring that each table adheres to these normalization forms, you can avoid common data integrity issues and build a solid foundation for your database systems.</p>
-<br>
-<hr class="docutils" />
-<br>
 </div>
+<hr class="docutils" />
 <div class="section" id="database-normalization">
 <h2><strong>Database Normalization</strong><a class="headerlink" href="#database-normalization" title="Permalink to this heading">#</a></h2>
 <p><strong>What is Database Normalization?</strong></p>
@@ -375,12 +379,9 @@ document.write(`
 <li><p>To ensure relationships between tables are consistent.</p></li>
 <li><p>To make it easier to maintain and update the database.</p></li>
 </ul>
-<br>
 <hr class="docutils" />
-<br>
-</div>
 <div class="section" id="first-normal-form-1nf">
-<h2><strong>First Normal Form (1NF)</strong><a class="headerlink" href="#first-normal-form-1nf" title="Permalink to this heading">#</a></h2>
+<h3><strong>First Normal Form (1NF)</strong><a class="headerlink" href="#first-normal-form-1nf" title="Permalink to this heading">#</a></h3>
 <p><strong>Definition of 1NF:</strong></p>
 <ul>
 <li><p>A table is in the First Normal Form if:</p>
@@ -402,13 +403,11 @@ document.write(`
 <li><p>Ensures that each piece of data is accessible and queryable.</p></li>
 <li><p>Prevents multiple values from being stored in a single cell, reducing complexity.</p></li>
 </ul>
-<br>
-<div class="section" id="real-world-example">
-<h3><strong>“Real-world” Example:</strong><a class="headerlink" href="#real-world-example" title="Permalink to this heading">#</a></h3>
+<div class="section" id="example">
+<h4><strong>Example:</strong><a class="headerlink" href="#example" title="Permalink to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>Non-1NF Table</strong>: A <code class="docutils literal notranslate"><span class="pre">Contacts</span></code> table where the <code class="docutils literal notranslate"><span class="pre">Phone</span></code> column contains multiple phone numbers for some contacts.</p></li>
 </ul>
-<br>
 <table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p>ContactID</p></th>
@@ -427,12 +426,11 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<br>
-<ul class="simple">
-<li><p><strong>1NF Table</strong>: The same <code class="docutils literal notranslate"><span class="pre">Contacts</span></code> table modified to adhere to 1NF by introducing a new table for phone numbers.</p></li>
-</ul>
-<br>
+<ul>
+<li><p><strong>1NF Table</strong>: The same <code class="docutils literal notranslate"><span class="pre">Contacts</span></code> table modified to adhere to 1NF by introducing a new table for phone numbers.</p>
 <p><strong>Contacts Table</strong></p>
+</li>
+</ul>
 <table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p>ContactID</p></th>
@@ -448,7 +446,6 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<br>
 <p><strong>Phones Table</strong></p>
 <table class="colwidths-auto table">
 <thead>
@@ -468,13 +465,11 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<br>
+</div>
+</div>
 <hr class="docutils" />
-<br>
-</div>
-</div>
 <div class="section" id="second-normal-form-2nf">
-<h2><strong>Second Normal Form (2NF)</strong><a class="headerlink" href="#second-normal-form-2nf" title="Permalink to this heading">#</a></h2>
+<h3><strong>Second Normal Form (2NF)</strong><a class="headerlink" href="#second-normal-form-2nf" title="Permalink to this heading">#</a></h3>
 <p><strong>Definition of 2NF:</strong></p>
 <ul class="simple">
 <li><p>A table is in the Second Normal Form if:</p>
@@ -497,13 +492,11 @@ document.write(`
 <li><p>Eliminates redundancy that occurs when data is stored in tables with composite primary keys but does not require all parts of the key.</p></li>
 <li><p>Ensures that each piece of information is stored only once, reducing the potential for inconsistencies.</p></li>
 </ul>
-<br>
 <div class="section" id="id1">
-<h3><strong>“Real-world” Example:</strong><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<h4><strong>Example:</strong><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>Pre-2NF Table</strong>: An <code class="docutils literal notranslate"><span class="pre">OrderDetails</span></code> table with a composite primary key (<code class="docutils literal notranslate"><span class="pre">OrderID</span></code>, <code class="docutils literal notranslate"><span class="pre">ProductID</span></code>) where the <code class="docutils literal notranslate"><span class="pre">ProductPrice</span></code> is partially dependent on <code class="docutils literal notranslate"><span class="pre">ProductID</span></code>.</p></li>
 </ul>
-<br>
 <table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p>OrderID</p></th>
@@ -530,12 +523,11 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<br>
-<ul class="simple">
-<li><p><strong>2NF Tables</strong>: Splitting the <code class="docutils literal notranslate"><span class="pre">OrderDetails</span></code> table into two to remove partial dependencies.</p></li>
-</ul>
-<br>
+<ul>
+<li><p><strong>2NF Tables</strong>: Splitting the <code class="docutils literal notranslate"><span class="pre">OrderDetails</span></code> table into two to remove partial dependencies.</p>
 <p><strong>Orders Table</strong></p>
+</li>
+</ul>
 <table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p>OrderID</p></th>
@@ -558,7 +550,6 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<br>
 <p><strong>Products Table</strong></p>
 <table class="colwidths-auto table">
 <thead>
@@ -575,16 +566,14 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<br>
+</div>
+</div>
+</div>
 <hr class="docutils" />
-<br>
-</div>
-</div>
 <div class="section" id="recommendations-and-best-practices-for-spatial-data">
 <h2><strong>Recommendations and Best Practices for Spatial Data</strong><a class="headerlink" href="#recommendations-and-best-practices-for-spatial-data" title="Permalink to this heading">#</a></h2>
 <p>Focusing primarily on spatial data involves understanding the unique challenges and considerations that come with managing geospatial information in databases, especially when applying normalization principles.</p>
 <p>Here’s a detailed look into how these recommendations apply to spatial data:</p>
-<br>
 <div class="section" id="start-with-a-thorough-data-analysis">
 <h3><strong>1. Start with a Thorough Data Analysis</strong><a class="headerlink" href="#start-with-a-thorough-data-analysis" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
@@ -596,7 +585,6 @@ document.write(`
 <li><p><strong>Identify Spatial Dependencies</strong>: Determine if spatial attributes depend on primary keys or if they exhibit partial dependencies. For example, a <code class="docutils literal notranslate"><span class="pre">Landmarks</span></code> table might have a <code class="docutils literal notranslate"><span class="pre">Location</span></code> column that’s functionally dependent on the landmark ID.</p></li>
 <li><p><strong>Consider Spatial Data Types</strong>: Be familiar with spatial data types provided by PostGIS, such as <code class="docutils literal notranslate"><span class="pre">GEOMETRY</span></code> and <code class="docutils literal notranslate"><span class="pre">GEOGRAPHY</span></code>, and understand when to use them based on your data’s requirements.</p></li>
 </ul>
-<br>
 </div>
 <div class="section" id="use-normalization-as-part-of-your-database-design">
 <h3><strong>2. Use Normalization as Part of Your Database Design</strong><a class="headerlink" href="#use-normalization-as-part-of-your-database-design" title="Permalink to this heading">#</a></h3>
@@ -608,7 +596,6 @@ document.write(`
 </li>
 <li><p><strong>Normalization and Spatial Queries</strong>: Consider how normalization will affect your spatial queries. Sometimes, denormalizing spatial data slightly (e.g., duplicating some spatial columns in another table for faster access) can improve query performance for specific, frequently used operations.</p></li>
 </ul>
-<br>
 </div>
 <div class="section" id="remember-that-over-normalization-can-lead-to-excessive-complexity">
 <h3><strong>3. Remember that Over-normalization Can Lead to Excessive Complexity</strong><a class="headerlink" href="#remember-that-over-normalization-can-lead-to-excessive-complexity" title="Permalink to this heading">#</a></h3>
@@ -616,7 +603,6 @@ document.write(`
 <li><p><strong>Balancing Normalization and Performance</strong>: Spatial queries can be computationally intensive. Over-normalization can lead to multiple joins between tables, which might degrade performance for complex spatial queries. It is often a good practice to balance between normalization for data integrity and denormalization for query performance, especially in spatial databases where queries might involve calculations over large datasets.</p></li>
 <li><p><strong>Use Materialized Views for Complex Spatial Data</strong>: When dealing with complex spatial data and queries that span multiple normalized tables, consider using materialized views to store pre-computed joins or spatial operations. This can improve read performance at the cost of additional storage and the need to refresh the view after updates.</p></li>
 </ul>
-<br>
 </div>
 <div class="section" id="additional-considerations-for-spatial-data">
 <h3><strong>4. Additional Considerations for Spatial Data</strong><a class="headerlink" href="#additional-considerations-for-spatial-data" title="Permalink to this heading">#</a></h3>
@@ -624,7 +610,6 @@ document.write(`
 <li><p><strong>Data Integrity and Spatial Features</strong>: Use constraints and triggers to maintain data integrity, especially for spatial data. For example, triggers can automatically update spatial columns (like calculating the centroid of a polygon) when related non-spatial information changes.</p></li>
 <li><p><strong>Storage Considerations</strong>: Spatial data, especially when dealing with high-resolution geometries or large geographic areas, can be large. Consider the storage implications of your normalization decisions, particularly for how spatial data is stored and retrieved.</p></li>
 </ul>
-<br>
 </div>
 <div class="section" id="practical-example">
 <h3><em>Practical Example:</em><a class="headerlink" href="#practical-example" title="Permalink to this heading">#</a></h3>
@@ -636,17 +621,14 @@ document.write(`
 <li><p>Ensuring that spatial queries are optimized by applying spatial indexes on the <code class="docutils literal notranslate"><span class="pre">POIs</span></code> table’s location column.</p></li>
 </ol>
 <p>This structure reduces redundancy (e.g., city names repeated for each POI) and improves data integrity while allowing efficient spatial queries, such as finding all POIs within a specific city.</p>
-<br>
+</div>
+</div>
 <hr class="docutils" />
-<br>
-</div>
-</div>
 <div class="section" id="exercise-1-normalize-to-first-normal-form-1nf">
 <h2><strong>Exercise 1: Normalize to First Normal Form (1NF)</strong><a class="headerlink" href="#exercise-1-normalize-to-first-normal-form-1nf" title="Permalink to this heading">#</a></h2>
 <div class="section" id="scenario">
 <h3><em>Scenario</em><a class="headerlink" href="#scenario" title="Permalink to this heading">#</a></h3>
 <p>You’re given a table <code class="docutils literal notranslate"><span class="pre">CustomerOrders</span></code> that tracks customer orders for products. However, the table violates the First Normal Form (1NF) because it contains repeating groups in the <code class="docutils literal notranslate"><span class="pre">ProductIDs</span></code> and <code class="docutils literal notranslate"><span class="pre">Quantities</span></code> columns.</p>
-<br>
 <p><strong><code class="docutils literal notranslate"><span class="pre">CustomerOrders</span></code> Table (Non-1NF):</strong></p>
 <table class="colwidths-auto table">
 <thead>
@@ -674,7 +656,6 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<br>
 </div>
 <div class="section" id="id2">
 <h3><em>Objective</em><a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
@@ -733,11 +714,9 @@ document.write(`
 <div class="section" id="result">
 <h3>Result:<a class="headerlink" href="#result" title="Permalink to this heading">#</a></h3>
 <p>Now, the data is in 1NF. Each row in <code class="docutils literal notranslate"><span class="pre">OrderDetails</span></code> represents a single product order, eliminating the repeating groups.</p>
-<br>
+</div>
+</div>
 <hr class="docutils" />
-<br>
-</div>
-</div>
 <div class="section" id="exercise-2-normalize-to-second-normal-form-2nf">
 <h2><strong>Exercise 2: Normalize to Second Normal Form (2NF)</strong><a class="headerlink" href="#exercise-2-normalize-to-second-normal-form-2nf" title="Permalink to this heading">#</a></h2>
 <div class="section" id="id3">
@@ -827,13 +806,22 @@ Assuming a more fitting scenario for 2NF, where <code class="docutils literal no
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../syllabus.html"
+       href="../labs/A1-Urban_Green_Space.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="xref myst">Course Syllabus</span></p>
+        <p class="prev-next-title"><strong>Assignment 1: Urban Green Spaces Analysis</strong></p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../labs/A2-Database_Normalization.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><strong>Assignment 2: Database Normalization using PostgreSQL with PostGIS Extension</strong></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div></div>
   
@@ -854,13 +842,15 @@ Assuming a more fitting scenario for 2NF, where <code class="docutils literal no
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective"><em>Objective</em></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#database-normalization"><strong>Database Normalization</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-normal-form-1nf"><strong>First Normal Form (1NF)</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-example"><strong>“Real-world” Example:</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#database-normalization"><strong>Database Normalization</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#first-normal-form-1nf"><strong>First Normal Form (1NF)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example"><strong>Example:</strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#second-normal-form-2nf"><strong>Second Normal Form (2NF)</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>“Real-world” Example:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#second-normal-form-2nf"><strong>Second Normal Form (2NF)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Example:</strong></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendations-and-best-practices-for-spatial-data"><strong>Recommendations and Best Practices for Spatial Data</strong></a><ul class="nav section-nav flex-column">

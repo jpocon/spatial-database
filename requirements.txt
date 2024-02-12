@@ -1,0 +1,5 @@
+jupyter-book
+matplotlib
+numpy
+python>=3.11
+sphinx>=3.0

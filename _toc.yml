@@ -4,7 +4,7 @@
 format: jb-book
 root: about
 chapters:
-- file: syllabus.md
+- file: syllabus
   title: Course Syllabus
 - file: units/U0-Software_Overview.ipynb
   title: Software Installation

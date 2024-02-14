@@ -16,3 +16,5 @@ chapters:
   title: Introduction to Database Normalization - 1NF & 2NF
 - file: labs/A2-Database_Normalization.ipynb
   title: Assignment 2 - Practice with normalization
+- file: labs/A3-Real_Estate_Database.ipynb
+  title: Assignment 3 - Normalizing spatial data

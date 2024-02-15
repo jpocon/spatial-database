@@ -2,6 +2,8 @@
 
 This course is designed for individuals interested in GIS (Geographic Information Systems) project management and focuses on the critical aspects of organizing and managing location-based data. Throughout this course, you will gain hands-on experience and develop the skills necessary for professional GIS positions. Below is an overview of what you can expect from this course.
 
+This repository is hosted at [studyingplace.space/spatial-database](https://studyingplace.space/spatial-database).
+
 ## Course Overview
 
 Spatial database development is a fundamental component of effective GIS project management. It involves the meticulous organization, collection, and standardization of location-based data. This course is tailored to equip participants with the knowledge and skills to implement best practices in database development, emphasizing the importance of data integrity and accuracy in GIS projects.

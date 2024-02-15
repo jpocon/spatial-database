@@ -526,7 +526,8 @@ Let’s consider a scenario in our real estate database where a property can hav
 <span class="k">WHERE</span><span class="w"> </span><span class="n">ST_DWithin</span><span class="p">(</span>
 <span class="w">    </span><span class="n">ParkLocation</span><span class="p">,</span>
 <span class="w">    </span><span class="n">ST_MakePoint</span><span class="p">(</span><span class="n">longitude</span><span class="p">,</span><span class="w"> </span><span class="n">latitude</span><span class="p">)::</span><span class="n">geography</span><span class="p">,</span>
-<span class="w">    </span><span class="mi">1000</span><span class="w"> </span><span class="c1">-- Search within 1km (default is meters since proj is 4326)</span>
+<span class="w">    </span><span class="mi">1000</span><span class="w"> </span><span class="c1">-- Search within 1km (default is meters since data type is GEOGRAPHY)</span>
+<span class="w">    </span><span class="c1">-- What would the units be if data type were GEOMETRY?</span>
 <span class="p">);</span>
 </pre></div>
 </div>

@@ -8,7 +8,7 @@ It is recommended that students are required to have introductory knowledge of G
 ```
 
 ## Learning Objectives
-Student evaluation during this course will depend on understanding and applying fundamental spatial database development and interaction through assignments and class exercises. For a more comprehensive understanding of the course schedule and what is expected of students, please consult the [Syllabus](syllabus-011924.pdf).
+Student evaluation during this course will depend on understanding and applying fundamental spatial database development and interaction through assignments and class exercises. For a more comprehensive understanding of the course schedule and what is expected of students, please consult the [Syllabus](materials/Syllabus-011924.pdf).
 
 By the end of the course, students will:
 - Understand the foundational knowledge behind databases, specifically geodatabases;
@@ -17,8 +17,8 @@ By the end of the course, students will:
 
 ## Student Responsibilities
 Each student is responsible for the following:
-- Completely reading the [Syllabus](syllabus-011924.pdf) and understanding course requirements;
+- Completely reading the [Syllabus](materials/Syllabus-011924.pdf) and understanding course requirements;
 - Staying informed and up-to-date on all course-related work each and every week;
-- Reading announcements and participating in [Slack](https://slack.com/);
-- Posting and answering questions about the course and assignments to [Slack](https://slack.com/) for the benefit of other students;
+- Reading announcements and participating in [Slack](https://clark-gis.slack.com/);
+- Posting and answering questions about the course and assignments to [Slack](https://clark-gis.slack.com/) for the benefit of other students;
 - Connecting with the instructor via [GitHub](https://github.com/) for assignment tracking.

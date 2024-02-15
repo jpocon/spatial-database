@@ -154,13 +154,28 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="syllabus.html">Course Syllabus</a></li>
-<li class="toctree-l1"><a class="reference internal" href="units/U0-Software_Overview.html">Software Installation</a></li>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Materials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="materials/Syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="materials/Software_Overview.html">Software</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Units</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="units/U1-Database_Introduction.html">What is a database?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="labs/A1-Urban_Green_Space.html">Assignment 1 - Practice with software</a></li>
-<li class="toctree-l1"><a class="reference internal" href="units/U2-Introduction_to_Normalization-p1.html">Introduction to Database Normalization - 1NF &amp; 2NF</a></li>
-<li class="toctree-l1"><a class="reference internal" href="labs/A2-Database_Normalization.html">Assignment 2 - Practice with normalization</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="units/U2-Introduction_to_Normalization-p1.html">Database normalization - 1NF &amp; 2NF</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/sections/U2-SERIAL.html">SERIAL</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="units/U3-Introduction_to_Normalization-p2.html">Database normalization - 3NF &amp; 4NF</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/sections/U3-PostGIS.html">PostGIS 101</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="labs/A1-Urban_Green_Space.html">1. Practice with software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="labs/A2-Database_Normalization.html">2. Practice with normalization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="labs/A3-Real_Estate_Database.html">3. Normalizing spatial data</a></li>
 </ul>
 
     </div>
@@ -329,6 +344,7 @@ document.write(`
   <div class="tex2jax_ignore mathjax_ignore section" id="spatial-database-development-in-practice">
 <h1>Spatial Database Development in Practice<a class="headerlink" href="#spatial-database-development-in-practice" title="Permalink to this heading">#</a></h1>
 <p>This course is designed for individuals interested in GIS (Geographic Information Systems) project management and focuses on the critical aspects of organizing and managing location-based data. Throughout this course, you will gain hands-on experience and develop the skills necessary for professional GIS positions. Below is an overview of what you can expect from this course.</p>
+<p>This repository is hosted at <a class="reference external" href="https://studyingplace.space/spatial-database">studyingplace.space/spatial-database</a>.</p>
 <div class="section" id="course-overview">
 <h2>Course Overview<a class="headerlink" href="#course-overview" title="Permalink to this heading">#</a></h2>
 <p>Spatial database development is a fundamental component of effective GIS project management. It involves the meticulous organization, collection, and standardization of location-based data. This course is tailored to equip participants with the knowledge and skills to implement best practices in database development, emphasizing the importance of data integrity and accuracy in GIS projects.</p>

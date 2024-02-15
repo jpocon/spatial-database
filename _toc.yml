@@ -22,8 +22,8 @@ parts:
     - file: units/U3-Introduction_to_Normalization-p2.ipynb
       title: Database normalization - 3NF & 4NF
       sections:
-        - file: units/sections/U3-PostGIS.ipynb
-          title: PostGIS 101
+      - file: units/sections/U3-PostGIS.ipynb
+        title: PostGIS 101
   - caption: Labs
     chapters:
     - file: labs/A1-Urban_Green_Space.ipynb

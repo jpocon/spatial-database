@@ -15,9 +15,7 @@ parts:
     - file: units/U1-Database_Introduction.md
       title: What is a database?
     - file: units/U2-Introduction_to_Normalization-p1.ipynb
-      title: Introduction to Database Normalization - 1NF & 2NF
-      #sections:
-      #- file: 
+      title: Database normalization - 1NF & 2NF
   - caption: Assignments
     numbered: True
     chapters:

@@ -8,7 +8,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3. Assignment 3 - Normalizing Spatial Data in a Real Estate Database &#8212; Spatial Database Development in Practice</title>
+    <title>Assignment 3 - Normalizing Spatial Data in a Real Estate Database &#8212; Spatial Database Development in Practice</title>
   
   
   
@@ -64,7 +64,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="2. Assignment 2: Database Normalization using PostgreSQL with PostGIS Extension" href="A2-Database_Normalization.html" />
+    <link rel="prev" title="Assignment 2: Database Normalization using PostgreSQL with PostGIS Extension" href="A2-Database_Normalization.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -157,19 +157,26 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Materials</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">Syllabus</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../units/U0-Software_Overview.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../materials/Syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../materials/Software_Overview.html">Software</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Units</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../units/U1-Database_Introduction.html">What is a database?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../units/U2-Introduction_to_Normalization-p1.html">Introduction to Database Normalization - 1NF &amp; 2NF</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../units/U2-Introduction_to_Normalization-p1.html">Database normalization - 1NF &amp; 2NF</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../units/sections/U2-SERIAL.html">SERIAL</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Assignments</span></p>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../units/U3-Introduction_to_Normalization-p2.html">Database normalization - 3NF &amp; 4NF</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../units/sections/U3-PostGIS.html">PostGIS 101</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="A1-Urban_Green_Space.html">1. Practice with software</a></li>
-<li class="toctree-l1"><a class="reference internal" href="A2-Database_Normalization.html">2. Practice with normalization</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Normalizing spatial data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="A1-Urban_Green_Space.html">Practice with software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="A2-Database_Normalization.html">Practice with normalization</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Normalizing spatial data</a></li>
 </ul>
 
     </div>
@@ -316,18 +323,18 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">3.1. Objective</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-initial-setup">3.2. <strong>Part 1: Initial Setup</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-creating-the-initial-table">3.3. <strong>Part 2: Creating the Initial Table</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-normalize-to-3nf">3.4. <strong>Part 3: Normalize to 3NF</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-4-normalize-to-4nf">3.5. <strong>Part 4: Normalize to 4NF</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-5-spatial-data-manipulation">3.6. <strong>Part 5: Spatial Data Manipulation</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rubric">3.7. <strong>Rubric</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deliverables-and-learning-objectives">3.7.1. Deliverables and Learning Objectives</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-notes-for-students">3.7.1.1. Additional Notes for Students:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-initial-setup"><strong>Part 1: Initial Setup</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-creating-the-initial-table"><strong>Part 2: Creating the Initial Table</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-normalize-to-3nf"><strong>Part 3: Normalize to 3NF</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-4-normalize-to-4nf"><strong>Part 4: Normalize to 4NF</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-5-spatial-data-manipulation"><strong>Part 5: Spatial Data Manipulation</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rubric"><strong>Rubric</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deliverables-and-learning-objectives">Deliverables and Learning Objectives</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-notes-for-students">Additional Notes for Students:</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#submission-instructions">3.7.2. <strong>Submission Instructions</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#submission-instructions"><strong>Submission Instructions</strong></a></li>
 </ul>
 </li>
 </ul>
@@ -342,13 +349,13 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <div class="tex2jax_ignore mathjax_ignore section" id="assignment-3-normalizing-spatial-data-in-a-real-estate-database">
-<h1><span class="section-number">3. </span><strong>Assignment 3 - Normalizing Spatial Data in a Real Estate Database</strong><a class="headerlink" href="#assignment-3-normalizing-spatial-data-in-a-real-estate-database" title="Permalink to this heading">#</a></h1>
+<h1><strong>Assignment 3 - Normalizing Spatial Data in a Real Estate Database</strong><a class="headerlink" href="#assignment-3-normalizing-spatial-data-in-a-real-estate-database" title="Permalink to this heading">#</a></h1>
 <div class="section" id="objective">
-<h2><span class="section-number">3.1. </span>Objective<a class="headerlink" href="#objective" title="Permalink to this heading">#</a></h2>
+<h2>Objective<a class="headerlink" href="#objective" title="Permalink to this heading">#</a></h2>
 <p>You will design and normalize a simplistic database for a real estate platform that stores property details, including spatial data. The assignment will take you through creating an initial table structure and progressively normalizing it to the Third Normal Form (3NF) and Fourth Normal Form (4NF). Additionally, you will use PostgreSQL with the PostGIS extension for handling spatial data.</p>
 </div>
 <div class="section" id="part-1-initial-setup">
-<h2><span class="section-number">3.2. </span><strong>Part 1: Initial Setup</strong><a class="headerlink" href="#part-1-initial-setup" title="Permalink to this heading">#</a></h2>
+<h2><strong>Part 1: Initial Setup</strong><a class="headerlink" href="#part-1-initial-setup" title="Permalink to this heading">#</a></h2>
 <ol class="arabic">
 <li><p>Ensure PostgreSQL and PostGIS are installed and properly configured on your system.</p></li>
 <li><p>Create a new database named <code class="docutils literal notranslate"><span class="pre">RealEstateDB</span></code>.</p>
@@ -368,7 +375,7 @@ CREATE EXTENSION IF NOT EXISTS postgis;
 </ol>
 </div>
 <div class="section" id="part-2-creating-the-initial-table">
-<h2><span class="section-number">3.3. </span><strong>Part 2: Creating the Initial Table</strong><a class="headerlink" href="#part-2-creating-the-initial-table" title="Permalink to this heading">#</a></h2>
+<h2><strong>Part 2: Creating the Initial Table</strong><a class="headerlink" href="#part-2-creating-the-initial-table" title="Permalink to this heading">#</a></h2>
 <p>Create an initial <code class="docutils literal notranslate"><span class="pre">PropertyDetails</span></code> table that intentionally violates normalization principles.</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">PropertyDetails</span><span class="w"> </span><span class="p">(</span>
 <span class="w">    </span><span class="n">PropertyID</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
@@ -395,7 +402,7 @@ CREATE EXTENSION IF NOT EXISTS postgis;
 </ul>
 </div>
 <div class="section" id="part-3-normalize-to-3nf">
-<h2><span class="section-number">3.4. </span><strong>Part 3: Normalize to 3NF</strong><a class="headerlink" href="#part-3-normalize-to-3nf" title="Permalink to this heading">#</a></h2>
+<h2><strong>Part 3: Normalize to 3NF</strong><a class="headerlink" href="#part-3-normalize-to-3nf" title="Permalink to this heading">#</a></h2>
 <p>To achieve 3NF, remove transitive dependencies. This involves creating a new table for city demographics and adjusting the <code class="docutils literal notranslate"><span class="pre">PropertyDetails</span></code> table accordingly.</p>
 <ol class="arabic">
 <li><p><strong>Create <code class="docutils literal notranslate"><span class="pre">CityDemographics</span></code> Table</strong>:</p>
@@ -420,7 +427,7 @@ CREATE EXTENSION IF NOT EXISTS postgis;
 </ol>
 </div>
 <div class="section" id="part-4-normalize-to-4nf">
-<h2><span class="section-number">3.5. </span><strong>Part 4: Normalize to 4NF</strong><a class="headerlink" href="#part-4-normalize-to-4nf" title="Permalink to this heading">#</a></h2>
+<h2><strong>Part 4: Normalize to 4NF</strong><a class="headerlink" href="#part-4-normalize-to-4nf" title="Permalink to this heading">#</a></h2>
 <p>Address multi-valued dependencies by creating separate tables for <code class="docutils literal notranslate"><span class="pre">ZoningType</span></code> and <code class="docutils literal notranslate"><span class="pre">Utility</span></code>.</p>
 <ol class="arabic">
 <li><p><strong>Create <code class="docutils literal notranslate"><span class="pre">PropertyZoning</span></code> and <code class="docutils literal notranslate"><span class="pre">PropertyUtilities</span></code> Tables</strong>:</p>
@@ -449,7 +456,7 @@ CREATE EXTENSION IF NOT EXISTS postgis;
 </ol>
 </div>
 <div class="section" id="part-5-spatial-data-manipulation">
-<h2><span class="section-number">3.6. </span><strong>Part 5: Spatial Data Manipulation</strong><a class="headerlink" href="#part-5-spatial-data-manipulation" title="Permalink to this heading">#</a></h2>
+<h2><strong>Part 5: Spatial Data Manipulation</strong><a class="headerlink" href="#part-5-spatial-data-manipulation" title="Permalink to this heading">#</a></h2>
 <p>Inserting and querying spatial data using PostGIS.</p>
 <ol class="arabic">
 <li><p><strong>Insert a Property with Geolocation</strong>:</p>
@@ -473,9 +480,9 @@ CREATE EXTENSION IF NOT EXISTS postgis;
 </div>
 <hr class="docutils" />
 <div class="section" id="rubric">
-<h2><span class="section-number">3.7. </span><strong>Rubric</strong><a class="headerlink" href="#rubric" title="Permalink to this heading">#</a></h2>
+<h2><strong>Rubric</strong><a class="headerlink" href="#rubric" title="Permalink to this heading">#</a></h2>
 <div class="section" id="deliverables-and-learning-objectives">
-<h3><span class="section-number">3.7.1. </span>Deliverables and Learning Objectives<a class="headerlink" href="#deliverables-and-learning-objectives" title="Permalink to this heading">#</a></h3>
+<h3>Deliverables and Learning Objectives<a class="headerlink" href="#deliverables-and-learning-objectives" title="Permalink to this heading">#</a></h3>
 <p>Enhance understanding of database normalization principles (1NF to 4NF) and spatial data manipulation using PostgreSQL and PostGIS. Submission includes SQL scripts and a Markdown report detailing how the normalization principles are applied.</p>
 <table class="colwidths-auto table">
 <thead>
@@ -520,7 +527,7 @@ CREATE EXTENSION IF NOT EXISTS postgis;
 </tbody>
 </table>
 <div class="section" id="additional-notes-for-students">
-<h4><span class="section-number">3.7.1.1. </span>Additional Notes for Students:<a class="headerlink" href="#additional-notes-for-students" title="Permalink to this heading">#</a></h4>
+<h4>Additional Notes for Students:<a class="headerlink" href="#additional-notes-for-students" title="Permalink to this heading">#</a></h4>
 <ul class="simple">
 <li><p>Ensure SQL scripts are executable without errors and clearly formatted. Comments within the scripts should explain their purpose and how they apply to normalization principles.</p></li>
 <li><p>The Markdown report should detail the journey from 1NF through to 4NF, providing specific examples from your SQL scripts and explaining why each step satisfies the corresponding normalization form.</p></li>
@@ -530,7 +537,7 @@ CREATE EXTENSION IF NOT EXISTS postgis;
 </div>
 </div>
 <div class="section" id="submission-instructions">
-<h3><span class="section-number">3.7.2. </span><strong>Submission Instructions</strong><a class="headerlink" href="#submission-instructions" title="Permalink to this heading">#</a></h3>
+<h3><strong>Submission Instructions</strong><a class="headerlink" href="#submission-instructions" title="Permalink to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p>Push all SQL scripts and your Markdown report detailing the normalization process to your designated GitHub repository.</p></li>
 <li><p>Ensure your <a class="reference external" href="http://README.md">README.md</a> includes setup instructions and a brief overview of the repository contents.</p></li>
@@ -578,7 +585,7 @@ CREATE EXTENSION IF NOT EXISTS postgis;
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">2. </span><strong>Assignment 2: Database Normalization using PostgreSQL with PostGIS Extension</strong></p>
+        <p class="prev-next-title"><strong>Assignment 2: Database Normalization using PostgreSQL with PostGIS Extension</strong></p>
       </div>
     </a>
 </div></div>
@@ -599,18 +606,18 @@ CREATE EXTENSION IF NOT EXISTS postgis;
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">3.1. Objective</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-initial-setup">3.2. <strong>Part 1: Initial Setup</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-creating-the-initial-table">3.3. <strong>Part 2: Creating the Initial Table</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-normalize-to-3nf">3.4. <strong>Part 3: Normalize to 3NF</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-4-normalize-to-4nf">3.5. <strong>Part 4: Normalize to 4NF</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-5-spatial-data-manipulation">3.6. <strong>Part 5: Spatial Data Manipulation</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rubric">3.7. <strong>Rubric</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deliverables-and-learning-objectives">3.7.1. Deliverables and Learning Objectives</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-notes-for-students">3.7.1.1. Additional Notes for Students:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-initial-setup"><strong>Part 1: Initial Setup</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-creating-the-initial-table"><strong>Part 2: Creating the Initial Table</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-normalize-to-3nf"><strong>Part 3: Normalize to 3NF</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-4-normalize-to-4nf"><strong>Part 4: Normalize to 4NF</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-5-spatial-data-manipulation"><strong>Part 5: Spatial Data Manipulation</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rubric"><strong>Rubric</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deliverables-and-learning-objectives">Deliverables and Learning Objectives</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-notes-for-students">Additional Notes for Students:</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#submission-instructions">3.7.2. <strong>Submission Instructions</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#submission-instructions"><strong>Submission Instructions</strong></a></li>
 </ul>
 </li>
 </ul>

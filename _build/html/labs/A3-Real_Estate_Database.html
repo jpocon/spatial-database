@@ -359,13 +359,16 @@ document.write(`
 <ol class="arabic">
 <li><p>Ensure PostgreSQL and PostGIS are installed and properly configured on your system.</p></li>
 <li><p>Create a new database named <code class="docutils literal notranslate"><span class="pre">RealEstateDB</span></code>.</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">RealEstateDB</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="ss">&quot;RealEstateDB&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">-- Use double quotations to preserve case sensitivity.</span>
 </pre></div>
 </div>
 </li>
 <li><p>Connect to your database and enable the PostGIS extension.</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span>-- Connect to RealEstateDB
 \c RealEstateDB
+
+-- If you defined your database without double quotation marks, then to connect, you&#39;ll type in the name in all lowercase (specific to PostgreSQL)
+\c realestatedb
 
 -- Enable PostGIS
 CREATE EXTENSION IF NOT EXISTS postgis;

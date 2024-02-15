@@ -3,18 +3,27 @@
 
 format: jb-book
 root: about
-chapters:
-- file: syllabus
-  title: Course Syllabus
-- file: units/U0-Software_Overview.ipynb
-  title: Software Installation
-- file: units/U1-Database_Introduction.md
-  title: What is a database?
-- file: labs/A1-Urban_Green_Space.ipynb
-  title: Assignment 1 - Practice with software
-- file: units/U2-Introduction_to_Normalization-p1.ipynb
-  title: Introduction to Database Normalization - 1NF & 2NF
-- file: labs/A2-Database_Normalization.ipynb
-  title: Assignment 2 - Practice with normalization
-- file: labs/A3-Real_Estate_Database.ipynb
-  title: Assignment 3 - Normalizing spatial data
+parts:
+  - caption: Materials
+    chapters: 
+    - file: syllabus
+      title: Syllabus
+    - file: units/U0-Software_Overview.ipynb
+      title: Software
+  - caption: Units
+    chapters:
+    - file: units/U1-Database_Introduction.md
+      title: What is a database?
+    - file: units/U2-Introduction_to_Normalization-p1.ipynb
+      title: Introduction to Database Normalization - 1NF & 2NF
+      #sections:
+      #- file: 
+  - caption: Assignments
+    numbered: True
+    chapters:
+    - file: labs/A1-Urban_Green_Space.ipynb
+      title: Practice with software
+    - file: labs/A2-Database_Normalization.ipynb
+      title: Practice with normalization
+    - file: labs/A3-Real_Estate_Database.ipynb
+      title: Normalizing spatial data

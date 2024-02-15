@@ -1,0 +1,692 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Database Normalization - 3NF &amp; 4NF &#8212; Spatial Database Development in Practice</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'units/U3-Introduction_to_Normalization-p2';</script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PostGIS 101" href="sections/U3-PostGIS.html" />
+    <link rel="prev" title="SERIAL Useage" href="sections/U2-SERIAL.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../about.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../about.html">
+                    Welcome to Spatial Database Development in Practice
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Materials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../materials/Syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../materials/Software_Overview.html">Software</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Units</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="U1-Database_Introduction.html">What is a database?</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="U2-Introduction_to_Normalization-p1.html">Database normalization - 1NF &amp; 2NF</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="sections/U2-SERIAL.html">SERIAL</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Database normalization - 3NF &amp; 4NF</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="sections/U3-PostGIS.html">PostGIS 101</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../labs/A1-Urban_Green_Space.html">1. Practice with software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/A2-Database_Normalization.html">2. Practice with normalization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/A3-Real_Estate_Database.html">3. Normalizing spatial data</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/units/U3-Introduction_to_Normalization-p2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Database Normalization - 3NF & 4NF</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#third-normal-form-3nf"><strong>Third Normal Form (3NF)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-with-spatial-data"><strong>Example with Spatial Data</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fourth-normal-form-4nf"><strong>Fourth Normal Form (4NF)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-this-is-important"><strong>Why this is important.</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normalizing-spatial-data"><strong>Normalizing Spatial Data</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scenario-city-parks-gis-database"><em>Scenario: City Parks GIS Database</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-define-the-initial-table-structure"><strong>Part 1: Define the Initial Table Structure</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-normalize-to-1nf"><strong>Part 2: Normalize to 1NF</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-normalize-to-2nf"><strong>Part 3: Normalize to 2NF</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-4-normalize-to-3nf"><strong>Part 4: Normalize to 3NF</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-5-normalize-to-4nf"><strong>Part 5: Normalize to 4NF</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-6-querying-spatial-data"><strong>Part 6: Querying Spatial Data</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-class-exercise"><strong>In-class Exercise</strong></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="tex2jax_ignore mathjax_ignore section" id="database-normalization-3nf-4nf">
+<h1><strong>Database Normalization - 3NF &amp; 4NF</strong><a class="headerlink" href="#database-normalization-3nf-4nf" title="Permalink to this heading">#</a></h1>
+<div class="section" id="third-normal-form-3nf">
+<h2><strong>Third Normal Form (3NF)</strong><a class="headerlink" href="#third-normal-form-3nf" title="Permalink to this heading">#</a></h2>
+<p>3NF is focused on eliminating <strong>transitive dependency</strong> from a database table. A table is in 3NF if it is in 2NF and all its attributes are not only fully functionally dependent on the primary key but also only on the primary key. In simpler terms, <em>no non-primary key attribute should depend on another non-primary key attribute</em>.</p>
+<ul class="simple">
+<li><p><strong>Transitive Dependency</strong>: This occurs when a non-primary key attribute depends on another non-primary key attribute.</p></li>
+<li><p><strong>Objective</strong>: To ensure that every non-primary key attribute is directly dependent on the primary key, promoting data integrity and reducing redundancy.</p></li>
+</ul>
+<div class="section" id="example-with-spatial-data">
+<h3><strong>Example with Spatial Data</strong>:<a class="headerlink" href="#example-with-spatial-data" title="Permalink to this heading">#</a></h3>
+<p>Imagine a database that stores information about properties for a real estate agency. Consider a table before applying 3NF:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Properties</span> <span class="n">Table</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">PropertyID</span> <span class="p">(</span><span class="n">Primary</span> <span class="n">Key</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">Address</span>
+<span class="o">-</span> <span class="n">City</span>
+<span class="o">-</span> <span class="n">CityPopulation</span>
+<span class="o">-</span> <span class="n">State</span>
+<span class="o">-</span> <span class="n">Country</span>
+</pre></div>
+</div>
+<p>In this table, <code class="docutils literal notranslate"><span class="pre">CityPopulation</span></code> is a transitive dependency because it depends on <code class="docutils literal notranslate"><span class="pre">City</span></code>, not directly on <code class="docutils literal notranslate"><span class="pre">PropertyID</span></code>. To bring this table to 3NF, we would remove <code class="docutils literal notranslate"><span class="pre">CityPopulation</span></code> and place it in a separate table where <code class="docutils literal notranslate"><span class="pre">City</span></code> is the primary key.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Properties</span> <span class="n">Table</span> <span class="p">(</span><span class="mi">3</span><span class="n">NF</span><span class="p">):</span>
+<span class="o">-</span> <span class="n">PropertyID</span> <span class="p">(</span><span class="n">Primary</span> <span class="n">Key</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">Address</span>
+<span class="o">-</span> <span class="n">City</span>
+<span class="o">-</span> <span class="n">State</span>
+<span class="o">-</span> <span class="n">Country</span>
+
+<span class="n">CityDemographics</span> <span class="n">Table</span> <span class="p">(</span><span class="mi">3</span><span class="n">NF</span><span class="p">):</span>
+<span class="o">-</span> <span class="n">City</span> <span class="p">(</span><span class="n">Primary</span> <span class="n">Key</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">CityPopulation</span>
+</pre></div>
+</div>
+<p>Now, all non-primary key attributes in the <code class="docutils literal notranslate"><span class="pre">Properties</span></code> table directly depend on the primary key, and <code class="docutils literal notranslate"><span class="pre">CityPopulation</span></code> is stored in a separate table, eliminating the transitive dependency.</p>
+</div>
+</div>
+<div class="section" id="fourth-normal-form-4nf">
+<h2><strong>Fourth Normal Form (4NF)</strong><a class="headerlink" href="#fourth-normal-form-4nf" title="Permalink to this heading">#</a></h2>
+<p>4NF takes normalization a step further by addressing <strong>multi-valued dependencies</strong>. A table is in 4NF if it is in 3NF and does not have any multi-valued dependencies unless they are trivial.</p>
+<ul class="simple">
+<li><p><strong>Multi-valued Dependency</strong>: This occurs when two attributes in a table are independent of each other but both depend on a third attribute (the primary key).</p></li>
+<li><p><strong>Objective</strong>: To separate attributes into different tables such that each table contains no multi-valued dependencies, thereby reducing redundancy and promoting data integrity.</p></li>
+</ul>
+<p>####<strong>Example with Spatial Data</strong>:
+Let’s consider a scenario in our real estate database where a property can have multiple types of spatial data associated with it, like zoning types and available utilities.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PropertyZoningUtilities</span> <span class="n">Table</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">PropertyID</span> <span class="p">(</span><span class="n">Primary</span> <span class="n">Key</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">ZoningType</span>
+<span class="o">-</span> <span class="n">Utility</span>
+</pre></div>
+</div>
+<p>A property could be zoned for both <em>residential</em> and <em>commercial</em> use and could have utilities like <em>electricity</em> and <em>water</em>. This setup introduces multi-valued dependencies because <code class="docutils literal notranslate"><span class="pre">ZoningType</span></code> and <code class="docutils literal notranslate"><span class="pre">Utility</span></code> are independent of each other but both depend on <code class="docutils literal notranslate"><span class="pre">PropertyID</span></code>.</p>
+<p>To normalize to 4NF, we split this into two tables:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PropertyZoning</span> <span class="n">Table</span> <span class="p">(</span><span class="mi">4</span><span class="n">NF</span><span class="p">):</span>
+<span class="o">-</span> <span class="n">PropertyID</span> <span class="p">(</span><span class="n">Primary</span> <span class="n">Key</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">ZoningType</span>
+
+<span class="n">PropertyUtilities</span> <span class="n">Table</span> <span class="p">(</span><span class="mi">4</span><span class="n">NF</span><span class="p">):</span>
+<span class="o">-</span> <span class="n">PropertyID</span> <span class="p">(</span><span class="n">Primary</span> <span class="n">Key</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">Utility</span>
+</pre></div>
+</div>
+<p>Now, each table contains no multi-valued dependencies, and the database structure more accurately reflects the reality that zoning types and utilities are independent aspects of a property.</p>
+<div class="section" id="why-this-is-important">
+<h3><strong>Why this is important.</strong><a class="headerlink" href="#why-this-is-important" title="Permalink to this heading">#</a></h3>
+<p>By implementing 3NF, we ensure that all attributes in a table are only dependent on the primary key, removing any transitive dependencies. Advancing to 4NF further refines our database design by separating attributes with multi-valued dependencies into their tables, thereby reducing redundancy and promoting a cleaner, more efficient database structure.</p>
+<p><strong>These principles of normalization help in designing databases that are logical, maintainable, and scalable, especially important when dealing with complex data types like spatial data.</strong></p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="normalizing-spatial-data">
+<h2><strong>Normalizing Spatial Data</strong><a class="headerlink" href="#normalizing-spatial-data" title="Permalink to this heading">#</a></h2>
+<p>Let’s go over another example involving spatial data, focusing on a Geographic Information Systems (GIS) for managing city infrastructure. This example will cover designing and normalizing a database that records information about public parks within a city, including their locations, amenities, and maintenance schedules.</p>
+<div class="section" id="scenario-city-parks-gis-database">
+<h3><em>Scenario: City Parks GIS Database</em><a class="headerlink" href="#scenario-city-parks-gis-database" title="Permalink to this heading">#</a></h3>
+<p>The city’s Parks and Recreation Department requires a database to manage information about city parks, including park locations, available amenities (e.g., playgrounds, restrooms, picnic areas), and maintenance schedules for these amenities.</p>
+<div class="section" id="part-1-define-the-initial-table-structure">
+<h4><strong>Part 1: Define the Initial Table Structure</strong><a class="headerlink" href="#part-1-define-the-initial-table-structure" title="Permalink to this heading">#</a></h4>
+<p>Start by creating an initial table that combines all the information into one structure. This table will not be normalized and will serve as the starting point for the exercise:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">CityParks</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">ParkID</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ParkName</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+<span class="w">    </span><span class="n">ParkLocation</span><span class="w"> </span><span class="n">GEOMETRY</span><span class="p">(</span><span class="n">Point</span><span class="p">,</span><span class="w"> </span><span class="mi">4326</span><span class="p">),</span><span class="w"> </span><span class="c1">-- Using PostGIS for spatial data</span>
+<span class="w">    </span><span class="n">AmenityType</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span><span class="w"> </span><span class="c1">-- e.g., Playground, Restroom</span>
+<span class="w">    </span><span class="n">MaintenanceSchedule</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span><span class="w"> </span><span class="c1">-- e.g., &quot;Every Monday&quot;</span>
+<span class="w">    </span><span class="n">MaintenanceContact</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="c1">-- Contact information for maintenance crew</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="part-2-normalize-to-1nf">
+<h4><strong>Part 2: Normalize to 1NF</strong><a class="headerlink" href="#part-2-normalize-to-1nf" title="Permalink to this heading">#</a></h4>
+<p>Ensure that the table is in the First Normal Form (1NF) by eliminating repeating groups and ensuring atomicity. In the initial design, <code class="docutils literal notranslate"><span class="pre">AmenityType</span></code>, <code class="docutils literal notranslate"><span class="pre">MaintenanceSchedule</span></code>, and <code class="docutils literal notranslate"><span class="pre">MaintenanceContact</span></code> could potentially form repeating groups if a park has multiple amenities, which violates 1NF.</p>
+<p><strong>Solution</strong>:</p>
+<ol class="arabic simple">
+<li><p>Separate amenities into a new table to ensure atomicity and eliminate repeating groups.</p></li>
+</ol>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">ParkAmenities</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">AmenityID</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ParkID</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">CityParks</span><span class="p">(</span><span class="n">ParkID</span><span class="p">),</span>
+<span class="w">    </span><span class="n">AmenityType</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+<span class="w">    </span><span class="n">MaintenanceSchedule</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">MaintenanceContact</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Remove <code class="docutils literal notranslate"><span class="pre">AmenityType</span></code>, <code class="docutils literal notranslate"><span class="pre">MaintenanceSchedule</span></code>, and <code class="docutils literal notranslate"><span class="pre">MaintenanceContact</span></code> from <code class="docutils literal notranslate"><span class="pre">CityParks</span></code>.</p></li>
+</ol>
+</div>
+<div class="section" id="part-3-normalize-to-2nf">
+<h4><strong>Part 3: Normalize to 2NF</strong><a class="headerlink" href="#part-3-normalize-to-2nf" title="Permalink to this heading">#</a></h4>
+<p>Ensure all non-key attributes in <code class="docutils literal notranslate"><span class="pre">ParkAmenities</span></code> are fully functionally dependent on the primary key.</p>
+<p>Since <code class="docutils literal notranslate"><span class="pre">ParkID</span></code> is a foreign key and not part of a composite key, and all other attributes depend on <code class="docutils literal notranslate"><span class="pre">AmenityID</span></code>, the table is already in 2NF.</p>
+</div>
+<div class="section" id="part-4-normalize-to-3nf">
+<h4><strong>Part 4: Normalize to 3NF</strong><a class="headerlink" href="#part-4-normalize-to-3nf" title="Permalink to this heading">#</a></h4>
+<p>To achieve 3NF, ensure that there are no transitive dependencies.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">MaintenanceContact</span></code> depends on <code class="docutils literal notranslate"><span class="pre">AmenityType</span></code> rather than <code class="docutils literal notranslate"><span class="pre">AmenityID</span></code>, it’s a transitive dependency.</p>
+<p><strong>Solution</strong>:</p>
+<ol class="arabic simple">
+<li><p>Create a separate table for maintenance information related to each amenity type.</p></li>
+</ol>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">AmenityMaintenance</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">AmenityType</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">MaintenanceSchedule</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">MaintenanceContact</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><em>What’s the difference between <code class="docutils literal notranslate"><span class="pre">TEXT</span></code> and <code class="docutils literal notranslate"><span class="pre">VARCHAR(n)</span></code>?</em></p>
+<ul>
+<li><p>In SQL, the difference between <code class="docutils literal notranslate"><span class="pre">VARCHAR(n)</span></code> and <code class="docutils literal notranslate"><span class="pre">TEXT</span></code> is that <code class="docutils literal notranslate"><span class="pre">VARCHAR(n)</span></code> limits the maximum length of a column. For example, <code class="docutils literal notranslate"><span class="pre">VARCHAR(255)</span></code> will not allow a string longer than 255 characters.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VARCHAR</span></code> uses less storage than <code class="docutils literal notranslate"><span class="pre">TEXT</span></code> for strings up to 255 characters.</p></li>
+<li><p>In the past, many database management systems have set 255 characters as the maximum length for a <code class="docutils literal notranslate"><span class="pre">VARCHAR</span></code>. Even today, this limit often remains effective, especially when utilizing UTF-8 encoding and indexing columns due to restrictions on index length. It’s the largest number of characters that can be counted with an 8-bit number.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TEXT</span></code> is deprecated in SQL, so best to use <code class="docutils literal notranslate"><span class="pre">VARCHAR(n)</span></code> and specificy length of <code class="docutils literal notranslate"><span class="pre">n</span></code> – for now, set to “255” for less storage useage.</p></li>
+</ul>
+</li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p>Update <code class="docutils literal notranslate"><span class="pre">ParkAmenities</span></code> to remove <code class="docutils literal notranslate"><span class="pre">MaintenanceSchedule</span></code> and <code class="docutils literal notranslate"><span class="pre">MaintenanceContact</span></code>, and adjust foreign key relationships as necessary.</p></li>
+</ol>
+</div>
+<div class="section" id="part-5-normalize-to-4nf">
+<h4><strong>Part 5: Normalize to 4NF</strong><a class="headerlink" href="#part-5-normalize-to-4nf" title="Permalink to this heading">#</a></h4>
+<p>Address any multi-valued dependencies.</p>
+<p>If the database design has reached this point without multi-valued dependencies, then it is already in 4NF. For our scenario, assuming that each <code class="docutils literal notranslate"><span class="pre">AmenityType</span></code> has a unique <code class="docutils literal notranslate"><span class="pre">MaintenanceSchedule</span></code> and <code class="docutils literal notranslate"><span class="pre">MaintenanceContact</span></code>, the design should meet 4NF criteria.</p>
+</div>
+<div class="section" id="part-6-querying-spatial-data">
+<h4><strong>Part 6: Querying Spatial Data</strong><a class="headerlink" href="#part-6-querying-spatial-data" title="Permalink to this heading">#</a></h4>
+<ol class="arabic">
+<li><p><strong>Inserting Spatial Data</strong>:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">CityParks</span><span class="w"> </span><span class="p">(</span><span class="n">ParkName</span><span class="p">,</span><span class="w"> </span><span class="n">ParkLocation</span><span class="p">)</span>
+<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Central Park&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">ST_GeomFromText</span><span class="p">(</span><span class="s1">&#39;POINT(longitude latitude)&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">4326</span><span class="p">));</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">latitude</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">longitude</span></code> in this case would need to be actual coordinates.</p></li>
+</ul>
+<ol class="arabic" start="2">
+<li><p><strong>Finding Nearby Parks</strong>:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">ParkName</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">CityParks</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">ST_DWithin</span><span class="p">(</span>
+<span class="w">    </span><span class="n">ParkLocation</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ST_MakePoint</span><span class="p">(</span><span class="n">longitude</span><span class="p">,</span><span class="w"> </span><span class="n">latitude</span><span class="p">)::</span><span class="n">geography</span><span class="p">,</span>
+<span class="w">    </span><span class="mi">1000</span><span class="w"> </span><span class="c1">-- Search within 1km (default is meters since proj is 4326)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="section" id="in-class-exercise">
+<h2><strong>In-class Exercise</strong><a class="headerlink" href="#in-class-exercise" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Normalize the provided initial table structure through 1NF to 4NF, ensuring efficient data organization and integrity.</p></li>
+<li><p>Populate the tables with sample data, including at least three parks with multiple amenities.</p></li>
+<li><p>Use spatial queries to demonstrate finding parks within a specified distance from a given point.</p></li>
+</ul>
+<p>This example provides a practice scenario to normalize in a real-world context, enhancing our understanding of database design and spatial data management in GIS applications.</p>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./units"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="sections/U2-SERIAL.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><strong><code class="docutils literal notranslate"><span class="pre">SERIAL</span></code> Useage</strong></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="sections/U3-PostGIS.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><strong>PostGIS 101</strong></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#third-normal-form-3nf"><strong>Third Normal Form (3NF)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-with-spatial-data"><strong>Example with Spatial Data</strong>:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fourth-normal-form-4nf"><strong>Fourth Normal Form (4NF)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-this-is-important"><strong>Why this is important.</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normalizing-spatial-data"><strong>Normalizing Spatial Data</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scenario-city-parks-gis-database"><em>Scenario: City Parks GIS Database</em></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-define-the-initial-table-structure"><strong>Part 1: Define the Initial Table Structure</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-normalize-to-1nf"><strong>Part 2: Normalize to 1NF</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-normalize-to-2nf"><strong>Part 3: Normalize to 2NF</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-4-normalize-to-3nf"><strong>Part 4: Normalize to 3NF</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-5-normalize-to-4nf"><strong>Part 5: Normalize to 4NF</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-6-querying-spatial-data"><strong>Part 6: Querying Spatial Data</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-class-exercise"><strong>In-class Exercise</strong></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Prof. Jonathan Pando Ocón
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

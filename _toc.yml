@@ -5,7 +5,7 @@ format: jb-book
 root: about
 parts:
   - caption: Materials
-    chapters: 
+    chapters:
     - file: syllabus
       title: Syllabus
     - file: units/U0-Software_Overview.ipynb
@@ -17,7 +17,6 @@ parts:
     - file: units/U2-Introduction_to_Normalization-p1.ipynb
       title: Database normalization - 1NF & 2NF
   - caption: Assignments
-    numbered: True
     chapters:
     - file: labs/A1-Urban_Green_Space.ipynb
       title: Practice with software

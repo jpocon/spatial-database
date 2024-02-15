@@ -1,4 +1,4 @@
-# Course Syllabus
+# **Course Syllabus**
 
 ## Course Overview
 Spatial database development, a key component of GIS project management, focuses on the organization of location-based data. Participants will learn database development best practices, data collection and standardization, and how to apply topological rules to a database. Throughout the course, students will work on final database projects which will build skills required in professional GIS positions, with an emphasis on collaboration and real-world applications of data.

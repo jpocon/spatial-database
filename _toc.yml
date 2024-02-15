@@ -2,13 +2,13 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: about
+root: about.md
 parts:
   - caption: Materials
     chapters:
-    - file: syllabus
+    - file: materials/Syllabus.md
       title: Syllabus
-    - file: units/U0-Software_Overview.ipynb
+    - file: materials/Software_Overview.ipynb
       title: Software
   - caption: Units
     chapters:
@@ -16,7 +16,15 @@ parts:
       title: What is a database?
     - file: units/U2-Introduction_to_Normalization-p1.ipynb
       title: Database normalization - 1NF & 2NF
-  - caption: Assignments
+      sections:
+      - file: units/sections/U2-SERIAL.ipynb
+        title: SERIAL
+    - file: units/U3-Introduction_to_Normalization-p2.ipynb
+      title: Database normalization - 3NF & 4NF
+      sections:
+        - file: units/sections/U3-PostGIS.ipynb
+          title: PostGIS 101
+  - caption: Labs
     chapters:
     - file: labs/A1-Urban_Green_Space.ipynb
       title: Practice with software
